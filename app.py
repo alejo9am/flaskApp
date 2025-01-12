@@ -5,7 +5,15 @@ import pandas as pd
 from src import functions as fn
 
 app = Flask(__name__)
-    
+app.secret_key = "flaskkey"
+
+# Eliminar todos los mensajes de advertencia
+import logging
+
+# Desactiva los logs de Werkzeug (el servidor de Flask)
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -63,6 +71,9 @@ def create_chart():
 
         img = fn.create_base64(df, columns, chart_type)
 
+        if img is None:
+            img = 0
+
     return render_template('index.html',
                            name=name,
                            table=table,
@@ -71,4 +82,4 @@ def create_chart():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

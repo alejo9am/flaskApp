@@ -19,7 +19,8 @@
   <form action="/chart" method="POST">
     <div>
       <label for="columns">Put columns numbers:</label>
-      <input type="text" name="columns" id="columns">
+      <input type="text" name="columns" id="columns" required
+        placeholder="0,1">
     </div>
     <div>
       <label for="chart_type">Select chart type:</label>
@@ -39,7 +40,29 @@
   <div class="chart-container">
     <img src="data:image/png;base64,{{ img64base }}" alt="Generated chart">
   </div>
+  {% elif img64base == 0 %}
+    <!-- Modal -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h2>Select a correct value of columns</h2>
+        <button class="close-button" onclick="closeModal()">Close</button>
+      </div>
+
+      <script>
+        // Mostrar el modal si `img64base` es None
+        const modal = document.getElementById('modal');
+        if (modal) {
+          modal.style.display = 'flex'; // Mostrar el modal
+        }
+    
+        // Función para cerrar el modal
+        function closeModal() {
+          modal.style.display = 'none';
+        }
+      </script>
+    </div>
   {% endif %}
+
 </body>
 </html>
 
