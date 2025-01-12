@@ -20,15 +20,12 @@ def create_base64(df, columns: list[int], chart_type: str):
     if len(columns) == 1:
         i = columns[0]
         x = df.iloc[:, i].tolist()
-        print(f'x:', x)
         if chart_type in ['points', 'lines', 'bars']:
             return None
 
     elif len(columns) == 2:
         i, j = columns[0], columns[1]
         x, y = df.iloc[:, i].tolist(), df.iloc[:, j].tolist()
-        print(f'y:', y)
-        print(f'x:', x)
         if chart_type == 'histogram':
             return None
     else:
@@ -55,6 +52,11 @@ def create_base64(df, columns: list[int], chart_type: str):
 
 
 def table_html_view(df):
+
+    #Add column index for better visualization
+    renamed_columns = {col: f"({i}) {col}" for i, col in enumerate(df.columns)}
+    df = df.rename(columns=renamed_columns)
+
     n_rows = df.shape[0]
     if n_rows > 6:
         reprezentation = df.iloc[[0, 1, 2, -3, -2, -1], :].to_html(max_cols=7, max_rows=7)

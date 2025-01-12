@@ -1,4 +1,5 @@
 /env
+/.flask_session
 
 # Ignore Git's internal files
 .git/

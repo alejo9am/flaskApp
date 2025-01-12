@@ -1,5 +1,6 @@
 import io
 from flask import Flask, render_template, request, session
+from flask_session import Session
 import pandas as pd
 
 from src import functions as fn
@@ -7,13 +8,10 @@ from src import functions as fn
 app = Flask(__name__)
 app.secret_key = "flaskkey"
 
-# Eliminar todos los mensajes de advertencia
-import logging
-
-# Desactiva los logs de Werkzeug (el servidor de Flask)
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
-
+#Configuration for Flask session to handle big .csv files
+app.config['SESSION_TYPE'] = 'filesystem'  # Almacena las sesiones en el sistema de archivos
+app.config['SESSION_FILE_DIR'] = './.flask_session/'  # Directorio para los archivos de sesión
+Session(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
