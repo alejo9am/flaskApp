@@ -5,3 +5,8 @@
 *.idx
 *.pack
 *.rev
+
+# Ignore Python bytecode
+__pycache__/
+*.pyc
+*.pyo
